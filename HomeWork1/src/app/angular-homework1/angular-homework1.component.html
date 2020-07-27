@@ -1,0 +1,22 @@
+<div class="section container-fluid">
+    <div class="header container-fluid">
+        <h2>List of prohibited words:</h2>
+    </div>
+    <div class=" main container-fluid">
+        <div class="cenzor col-9 container">
+            <form name="words" novalidate>
+                <label for="cenzor__inp" class="label">Bad words: <span class="forbidden text-danger">{{ wordArrMethod() }}</span></label>
+                <div class="form__group d-flex justify-content-between mb-3">
+                    <input type="text" class="col-8 form-control" id="cenzor__inp" placeholder="{{placeholder}}" [(ngModel)]="badWord " name="badWord " [class.check]="check" [class.is-invalid]="isValid">
+                    <div class=" btn__group col-4 d-flex justify-content-between ">
+                        <button type="button " class="btn btn-warning " id="add " (click)="addWord() ">Add</button>
+                        <button type="button " class="btn btn-danger " id="reset " (click)="reset() ">Reset</button>
+                    </div>
+                </div>
+                <textarea name="words__area " class="col-12 form-control " id="area " cols="30 " rows="5 " placeholder="{{areaPlaceholder}}" [(ngModel)]="textarea" name="textarea" [class.check]="check" [class.is-invalid]="isValidArea"></textarea>
+                <button type="button " class="col-12 btn btn-success mt-3 " id="cenzor__btn " (click)="cenzorText(textarea)">Cenzor</button>
+            </form>
+        </div>
+    </div>
+    <div class="footer container-fluid "></div>
+</div>

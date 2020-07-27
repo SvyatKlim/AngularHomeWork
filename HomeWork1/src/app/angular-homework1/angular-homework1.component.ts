@@ -24,6 +24,7 @@ export class AngularHomework1Component implements OnInit {
       this.wordArr.push(this.badWord);
       this.placeholder = 'word here..';
       this.badWord = '';
+      this.isValid = false;
     } else {
       this.check = true;
       this.placeholder = 'Please write a word.';
@@ -39,7 +40,7 @@ export class AngularHomework1Component implements OnInit {
       this.areaPlaceholder = 'text here..';
       this.isValidArea = false;
       this.wordArr.forEach((element) => {
-        while (this.textarea.search(element) > 0) {
+        while (this.textarea.search(element) > -1) {
           console.log();
           let forReplace = '';
           for (let i = 0; i < element.length; i++) {

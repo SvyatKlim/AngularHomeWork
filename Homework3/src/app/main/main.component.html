@@ -1,0 +1,101 @@
+<section>
+  <div class="container">
+    <h2>Plan your day!</h2>
+    <h2>User: Ivanov Ivanov. Count of Task {{ length }}</h2>
+    <hr />
+    <form>
+      <div class="form-group col-12 d-flex justify-content-between">
+        <input
+          type="search"
+          class="form-control col-10"
+          [(ngModel)]="inpTask"
+          name="inpTask"
+        />
+        <button
+          type="button"
+          class="btn btn-success col-2 ml-4"
+          (click)="add()"
+        >
+          Add
+        </button>
+      </div>
+    </form>
+    <hr />
+    <table class="col-12">
+      <thead>
+        <tr>
+          <td>#</td>
+          <td>Task</td>
+          <td>Check</td>
+          <td>DONE/IN PROGRESS</td>
+          <td>Edit</td>
+          <td>DELETE</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="col-12" *ngFor="let task of taskArr; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ task.task }}</td>
+          <td>
+            <input
+              type="checkbox"
+              [checked]="task.check"
+              (click)="checkedBox(task)"
+            />
+          </td>
+          <td>
+            <span
+              *ngIf="task.progress"
+              [ngClass]="{ 'text-success': task.progress }"
+              >Done</span
+            >
+            <span
+              *ngIf="!task.progress"
+              [ngClass]="{ 'text-danger': !task.progress }"
+              >In PROGRESS</span
+            >
+          </td>
+          <td>
+            <button type="button" class="btn btn-warning" (click)="edit(task)">
+              Edit
+            </button>
+          </td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-danger"
+              [disabled]="task.check ? null : 'disabled'"
+              (click)="delete(i)"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+        <tr [ngClass]="[visibleInp ? 'visible' : 'hidden']">
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>
+            <input
+              type="text"
+              class="form-control col-6"
+              [(ngModel)]="newValue"
+              name="newValue"
+              value="{{ newValue }}"
+            />
+          </td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-success"
+              (click)="save(newValue)"
+            >
+              Save
+            </button>
+          </td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

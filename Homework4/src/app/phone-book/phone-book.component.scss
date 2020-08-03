@@ -1,0 +1,36 @@
+.conatiner {
+  max-width: 1200px;
+  padding: 0 50px;
+  margin: 0 auto;
+}
+.visible {
+  display: inline-block;
+}
+.hidden {
+  display: none;
+}
+
+thead th {
+  .arrow {
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  &:hover .arrow {
+    opacity: 1;
+  }
+}
+.modal.show {
+  display: block;
+}
+.modal {
+  &-body {
+    border-bottom: 1px solid #dee2e6;
+    border-bottom-left-radius: calc(0.3rem - 1px);
+    border-bottom-right-radius: calc(0.3rem - 1px);
+  }
+  &-button {
+    display: flex;
+    justify-content: flex-end;
+    padding: 15px;
+  }
+}

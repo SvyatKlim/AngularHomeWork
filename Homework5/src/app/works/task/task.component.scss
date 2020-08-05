@@ -1,0 +1,62 @@
+section {
+  height: 100%;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #fff;
+  margin-top: 30px;
+}
+
+input {
+  background-color: #fff;
+}
+
+.form-group {
+  margin-left: -15px;
+}
+
+thead td {
+  font-weight: bold;
+}
+
+thead {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  td {
+    padding-bottom: 10px;
+    &:first-child {
+      width: 60px;
+      padding-left: 10px;
+    }
+  }
+}
+
+tbody {
+  tr {
+    transition: 0.3s;
+    &:hover {
+      background-color: #dedede;
+    }
+  }
+  td {
+    padding: 5px 0;
+    &:first-child {
+      width: 60px;
+      padding-left: 10px;
+    }
+    &:nth-child(2) {
+      width: 150px;
+    }
+  }
+  .form-check-input {
+    margin: -5px 0 0 !important;
+  }
+  button {
+    margin: 5px 0;
+  }
+}
+
+.hidden {
+  display: none;
+}
+.visible {
+  display: table-row;
+}

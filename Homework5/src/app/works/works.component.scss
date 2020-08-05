@@ -1,0 +1,17 @@
+ul {
+  margin-top: 10px;
+}
+.first__text {
+  align-items: center;
+  margin: 0 20px;
+  font-weight: 500;
+}
+.nav-link.active {
+  color: #28a745 !important;
+}
+.nav-link {
+  font-weight: 500;
+}
+li:last-child {
+  margin-left: auto;
+}

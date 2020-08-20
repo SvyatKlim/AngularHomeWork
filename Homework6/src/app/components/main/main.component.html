@@ -1,0 +1,316 @@
+<header>
+  <nav class="navbar navbar-expand-lg bg-dark">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarTogglerDemo03"
+      aria-controls="navbarTogglerDemo03"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <p class="text-white m-2 header_title">
+      Angular Blog
+    </p>
+
+    <div class="collapse navbar-collapse" id="navbar">
+      <div class="btn-group" *ngIf="!loged">
+        <button
+          class="btn btn-outline-success my-2 my-sm-0"
+          type="submit"
+          (click)="openModal(templateIn)"
+        >
+          Sign In
+        </button>
+        <button
+          class="btn btn-outline-primary my-2 my-sm-0"
+          type="submit"
+          (click)="openModal(templateUp)"
+        >
+          Sign Up
+        </button>
+      </div>
+      <div class="btn-group" *ngIf="loged">
+        <button
+          class="btn btn-outline-success my-2 my-sm-0"
+          type="submit"
+          (click)="openModal(templatePost); addPostOpen()"
+        >
+          Add post
+        </button>
+        <button type="submit" class="btn btn-warning">
+          {{ loginedUser }}
+        </button>
+        <button
+          class="btn btn-outline-warning my-2 my-sm-0"
+          type="submit"
+          (click)="signOut()"
+        >
+          Sign Out
+        </button>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <div
+    class="post__container container"
+    *ngFor="let post of blogs; let i = index"
+  >
+    <h5>{{ post.topic }}</h5>
+    <div class="posted col-12">
+      <p class="text-secondary">Posted by: {{ post.postedBy }}</p>
+      <span class="date" *ngIf="i === 0"
+        ><svg
+          width="1em"
+          height="1em"
+          viewBox="0 0 16 16"
+          class="bi bi-clock"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm8-7A8 8 0 1 1 0 8a8 8 0 0 1 16 0z"
+          />
+          <path
+            fill-rule="evenodd"
+            d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z"
+          />
+        </svg>
+        {{ post.date | date: "hh:mm , dd.MM.y" }}</span
+      >
+      <span class="date" *ngIf="i > 0"
+        ><svg
+          width="1em"
+          height="1em"
+          viewBox="0 0 16 16"
+          class="bi bi-clock"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm8-7A8 8 0 1 1 0 8a8 8 0 0 1 16 0z"
+          />
+          <path
+            fill-rule="evenodd"
+            d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z"
+          />
+        </svg>
+        {{ post.date | date: "hh:mm , dd.MM.y" }}</span
+      >
+    </div>
+    <p>{{ post.message }}</p>
+    <div
+      class="options"
+      [ngClass]="
+        iAmAdmin || loginedUserId === post.userId ? 'visible' : 'hidden'
+      "
+    >
+      <div class="btn-group">
+        <button
+          type="submit"
+          class="btn btn-warning"
+          (click)="editPostOpen(templatePost, post)"
+        >
+          Edit
+        </button>
+        <button
+          type="submit"
+          class="btn btn-danger"
+          (click)="openModal(templateConfirm); deletePost(post.id)"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Modal Window     -->
+<ng-template #templateIn>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Sign In</h4>
+    <button
+      type="button"
+      class="close pull-right"
+      aria-label="Close"
+      (click)="modalRef.hide()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email:</label>
+        <input
+          type="email"
+          class="form-control"
+          id="exampleInputEmail1"
+          aria-describedby="emailHelp"
+          [(ngModel)]="signInEmail"
+          name="signInEmail"
+        />
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Password:</label>
+        <input
+          type="password"
+          class="form-control"
+          id="exampleInputPassword1"
+          [(ngModel)]="signInPass"
+          name="signInPass"
+        />
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <div class="btns-group">
+      <button type="submit" class="btn btn-secondary" (click)="modalRef.hide()">
+        Close
+      </button>
+      <button type="submit" class="btn btn-success ml-2" (click)="signIn()">
+        Submit
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #templatePost>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Add post</h4>
+    <button
+      type="button"
+      class="close pull-right"
+      aria-label="Close"
+      (click)="modalRef.hide()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Title:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="exampleInputEmail1"
+          aria-describedby="emailHelp"
+          [(ngModel)]="postTitle"
+          name="postTitle"
+        />
+      </div>
+      <div class="form-group">
+        <label for="exampleFormControlTextarea1">Text:</label>
+        <textarea
+          class="form-control"
+          id="exampleFormControlTextarea1"
+          rows="3"
+          [(ngModel)]="postText"
+          name="postText"
+        ></textarea>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <div class="btns-group">
+      <button type="submit" class="btn btn-secondary" (click)="modalRef.hide()">
+        Close
+      </button>
+      <button
+        *ngIf="btnPost"
+        type="submit"
+        class="btn btn-success ml-2"
+        (click)="addPost()"
+      >
+        Post
+      </button>
+      <button
+        *ngIf="!btnPost"
+        type="submit"
+        class="btn btn-success ml-2"
+        (click)="editPost()"
+      >
+        Edit Post
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #templateUp>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Sign up</h4>
+    <button
+      type="button"
+      class="close pull-right"
+      aria-label="Close"
+      (click)="modalRef.hide()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Username:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="exampleInputEmail1"
+          aria-describedby="emailHelp"
+          [(ngModel)]="regName"
+          name="regName"
+        />
+      </div>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email:</label>
+        <input
+          type="email"
+          class="form-control"
+          id="exampleInputEmail1"
+          aria-describedby="emailHelp"
+          [(ngModel)]="regEmail"
+          name="regEmail"
+        />
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword2">Password:</label>
+        <input
+          type="password"
+          class="form-control"
+          id="exampleInputPassword2"
+          [(ngModel)]="regPassword"
+          name="regPassword"
+        />
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <div class="btns-group">
+      <button type="submit" class="btn btn-secondary" (click)="modalRef.hide()">
+        Close
+      </button>
+      <button type="submit" class="btn btn-primary ml-2" (click)="signUp()">
+        Submit
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #templateConfirm>
+  <div class="modal-body text-center">
+    <p>Do you want to delete post?</p>
+    <button type="button" class="btn btn-default" (click)="confirm()">
+      Yes
+    </button>
+    <button type="button" class="btn btn-primary" (click)="decline()">
+      No
+    </button>
+  </div>
+</ng-template>

@@ -1,0 +1,46 @@
+#navbar {
+  display: flex;
+  justify-content: flex-end;
+}
+.header_title {
+  font-size: 20px;
+}
+.modal-header {
+  border-width: 2px;
+}
+.btns-group {
+  display: flex;
+  justify-content: flex-end;
+}
+textarea {
+  resize: none;
+  overflow: auto;
+}
+.date {
+  margin-left: auto;
+}
+main {
+  margin-top: 20px;
+}
+.post__container {
+  border: 1px solid #dee2e6;
+  border-radius: 5px;
+  padding: 15px;
+  .posted {
+    display: flex;
+    padding: 0 !important;
+  }
+  .options {
+    display: flex;
+    justify-content: flex-end;
+    &.visible {
+      display: flex !important;
+    }
+  }
+}
+.visible {
+  display: block !important;
+}
+.hidden {
+  display: none !important;
+}
